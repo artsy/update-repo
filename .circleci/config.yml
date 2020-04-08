@@ -14,15 +14,6 @@ workflows:
       - yarn/type-check:
           requires:
             - yarn/workflow-queue
-      - auto/publish-canary:
-          context: npm-deploy
-          filters:
-            branches:
-              ignore:
-                - master
-          requires:
-            - yarn/type-check
-            - yarn/update-cache
       - auto/publish:
           context: npm-deploy
           filters:
