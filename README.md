@@ -25,6 +25,9 @@ await updateRepo({
   assignees: ["ds300"],
   labels: ["automated"],
   update: (dir) => {
+    // This update function gets executed in a freshly-checked-out version
+    // of the repo you speicified. If you make any changes here they will
+    // be committed and added to a PR.
     execSync(`yarn add my-npm-package@${newVersion}`, { cwd: dir })
   },
 })
