@@ -1,0 +1,42 @@
+{
+  "name": "@artsy/update-repo",
+  "version": "0.0.0",
+  "description": "Update repositories easily from a node script",
+  "main": "index.js",
+  "repository": "https://github.com/artsy/update-repo",
+  "author": "Artsy",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "lib",
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@artsy/auto-config": "^1.0.2",
+    "@types/node": "^13.11.0",
+    "@types/tmp": "^0.1.0",
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "@octokit/rest": "^17.2.0",
+    "kleur": "^3.0.3",
+    "tmp": "^0.1.0"
+  }
+}
