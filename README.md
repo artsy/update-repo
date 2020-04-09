@@ -8,9 +8,11 @@ Update repos with a pull request
 
 ## Usage
 
-You need a GH_TOKEN in your env vars which has permission to push to the repo you want to update.
+Aside from node, you need three things in your execution environment to make this work:
 
-You also need to have an authorized SSH key to clone the repo.
+- A `GH_TOKEN` environment variable which has permissions to create a PR to the repo you want to update.
+- SSH keys with permissions to clone and push to the repo.
+- A git installation with `user.email` and `user.name` configured
 
 ```ts
 import { updateRepo } from "@artsy/update-repo"
