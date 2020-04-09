@@ -1,3 +1,15 @@
+# v0.0.6 (Thu Apr 09 2020)
+
+#### ⚠️  Pushed to master
+
+- Update README.md  ([@ds300](https://github.com/ds300))
+
+#### Authors: 1
+
+- David Sheldrick ([@ds300](https://github.com/ds300))
+
+---
+
 # v0.0.5 (Wed Apr 08 2020)
 
 #### 🐛  Bug Fix
