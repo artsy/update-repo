@@ -1,3 +1,16 @@
+# v0.0.7 (Fri Apr 10 2020)
+
+#### 🐛  Bug Fix
+
+- Configure Renovate [#1](https://github.com/artsy/update-repo/pull/1) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+
+#### Authors: 2
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.0.6 (Thu Apr 09 2020)
 
 #### ⚠️  Pushed to master
