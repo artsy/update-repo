@@ -180,18 +180,22 @@ async function createAndMergePullRequest({
     title: title,
     body,
   })
-  log.substep("Adding artsyit as an assignee to appease peril")
-  await octokit.issues.addAssignees({
-    ...repo,
-    issue_number: res.data.number,
-    assignees,
-  })
-  log.substep("Adding 'Merge On Green' label")
-  await octokit.issues.addLabels({
-    ...repo,
-    issue_number: res.data.number,
-    labels,
-  })
+  if (assignees.length) {
+    log.substep(`Adding assignees: [${assignees.join(", ")}]`)
+    await octokit.issues.addAssignees({
+      ...repo,
+      issue_number: res.data.number,
+      assignees,
+    })
+  }
+  if (labels.length) {
+    log.substep(`Adding labels: ${JSON.stringify(labels)}`)
+    await octokit.issues.addLabels({
+      ...repo,
+      issue_number: res.data.number,
+      labels,
+    })
+  }
 }
 
 /**
