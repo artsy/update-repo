@@ -8,17 +8,24 @@ interface Repo {
   repo: string
 }
 
-export async function updateRepo(args: {
+export async function updateRepo(_args: {
   repo: Repo
   branch: string
-  targetBranch: string
+  targetBranch?: string
   title: string
   body: string
-  commitMessage: string
-  assignees: string[]
-  labels: string[]
+  commitMessage?: string
+  assignees?: string[]
+  labels?: string[]
   update: (dir: string) => void
 }) {
+  const args = {
+    targetBranch: "master",
+    commitMessage: _args.title,
+    assignees: [],
+    labels: [],
+    ..._args,
+  }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
 
   const dirHandle = tmp.dirSync({ unsafeCleanup: true })
@@ -89,7 +96,7 @@ async function _updateRepo({
 
 function clone({ repo, dir }: { repo: Repo; dir: string }) {
   exec(
-    `git clone git@github.com:${repo.owner}/${repo.repo} ${dir}`,
+    `git clone https://${process.env.GH_TOKEN}@github.com/${repo.owner}/${repo.repo} ${dir}`,
     process.cwd(),
   )
 }
@@ -103,7 +110,11 @@ function push({
   branch: string
   commitMessage: string
 }) {
-  exec(`git commit -am '${commitMessage}'`, dir)
+  exec(`git add -A`, dir)
+  const result = spawnSync("git", ["commit", "-m", commitMessage], { cwd: dir })
+  if (result.status !== 0) {
+    throw new Error(`Failed comitting: ${result.output.toString()}`)
+  }
   exec(`git push origin ${branch} --force --no-verify`, dir)
 }
 
@@ -169,18 +180,22 @@ async function createAndMergePullRequest({
     title: title,
     body,
   })
-  log.substep("Adding artsyit as an assignee to appease peril")
-  await octokit.issues.addAssignees({
-    ...repo,
-    issue_number: res.data.number,
-    assignees,
-  })
-  log.substep("Adding 'Merge On Green' label")
-  await octokit.issues.addLabels({
-    ...repo,
-    issue_number: res.data.number,
-    labels,
-  })
+  if (assignees.length) {
+    log.substep(`Adding assignees: [${assignees.join(", ")}]`)
+    await octokit.issues.addAssignees({
+      ...repo,
+      issue_number: res.data.number,
+      assignees,
+    })
+  }
+  if (labels.length) {
+    log.substep(`Adding labels: ${JSON.stringify(labels)}`)
+    await octokit.issues.addLabels({
+      ...repo,
+      issue_number: res.data.number,
+      labels,
+    })
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
 # @artsy/update-repo
 
-Update repos with a pull request
+Update github repos with a pull request
 
 ## Installation
 
@@ -8,11 +8,10 @@ Update repos with a pull request
 
 ## Usage
 
-Aside from node, you need three things in your execution environment to make this work:
+Aside from node, you need two things in your execution environment to make this work:
 
-- A `GH_TOKEN` environment variable which has permissions to create a PR to the repo you want to update.
-- SSH keys with permissions to clone and push to the repo.
-- A git installation with `user.email` and `user.name` configured
+- A [`GH_TOKEN` environment variable](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) which has permissions to create a PR to the repo you want to update.
+- A git installation with `user.email` and `user.name` configured [or the equivalent environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
 
 ```ts
 import { updateRepo } from "@artsy/update-repo"
