@@ -1,3 +1,15 @@
+# v0.1.0 (Tue Apr 14 2020)
+
+#### 🚀  Enhancement
+
+- Use GH token for pushing too [#4](https://github.com/artsy/update-repo/pull/4) ([@ds300](https://github.com/ds300))
+
+#### Authors: 1
+
+- David Sheldrick ([@ds300](https://github.com/ds300))
+
+---
+
 # v0.0.7 (Fri Apr 10 2020)
 
 #### 🐛  Bug Fix
