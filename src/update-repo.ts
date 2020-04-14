@@ -103,7 +103,11 @@ function push({
   branch: string
   commitMessage: string
 }) {
-  exec(`git commit -am '${commitMessage}'`, dir)
+  exec(`git add -A`, dir)
+  const result = spawnSync("git", ["commit", "-m", commitMessage], { cwd: dir })
+  if (result.status !== 0) {
+    throw new Error(`Failed comitting: ${result.output.toString()}`)
+  }
   exec(`git push origin ${branch} --force --no-verify`, dir)
 }
 
