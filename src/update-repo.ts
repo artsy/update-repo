@@ -89,7 +89,7 @@ async function _updateRepo({
 
 function clone({ repo, dir }: { repo: Repo; dir: string }) {
   exec(
-    `git clone git@github.com:${repo.owner}/${repo.repo} ${dir}`,
+    `git clone https://${process.env.GH_TOKEN}@github.com/${repo.owner}/${repo.repo} ${dir}`,
     process.cwd(),
   )
 }
