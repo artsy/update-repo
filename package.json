@@ -24,11 +24,11 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@artsy/auto-config": "^1.0.2",
-    "@types/node": "^13.11.0",
-    "@types/tmp": "^0.1.0",
-    "prettier": "^2.0.4",
-    "typescript": "^3.8.3"
+    "@artsy/auto-config": "1.0.2",
+    "@types/node": "13.11.0",
+    "@types/tmp": "0.1.0",
+    "prettier": "2.0.4",
+    "typescript": "3.8.3"
   },
   "prettier": {
     "semi": false,
