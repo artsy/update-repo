@@ -8,17 +8,24 @@ interface Repo {
   repo: string
 }
 
-export async function updateRepo(args: {
+export async function updateRepo(_args: {
   repo: Repo
   branch: string
-  targetBranch: string
+  targetBranch?: string
   title: string
   body: string
-  commitMessage: string
-  assignees: string[]
-  labels: string[]
+  commitMessage?: string
+  assignees?: string[]
+  labels?: string[]
   update: (dir: string) => void
 }) {
+  const args = {
+    targetBranch: "master",
+    commitMessage: _args.title,
+    assignees: [],
+    labels: [],
+    ..._args,
+  }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
 
   const dirHandle = tmp.dirSync({ unsafeCleanup: true })
