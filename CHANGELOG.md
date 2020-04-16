@@ -1,3 +1,17 @@
+# v0.1.1 (Thu Apr 16 2020)
+
+#### 🐛  Bug Fix
+
+- Update auto orb to v1.2.0 [#5](https://github.com/artsy/update-repo/pull/5) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Pin dependencies [#3](https://github.com/artsy/update-repo/pull/3) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+
+#### Authors: 2
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.1.0 (Tue Apr 14 2020)
 
 #### 🚀  Enhancement
