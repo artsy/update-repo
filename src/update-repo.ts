@@ -1,5 +1,5 @@
 import tmp from "tmp"
-import { spawnSync, execSync } from "child_process"
+import { spawnSync } from "child_process"
 import chalk from "kleur"
 import { Octokit } from "@octokit/rest"
 
@@ -63,7 +63,7 @@ async function _updateRepo({
 }) {
   log.step("Cloning repo")
   clone({ repo, dir })
-  await forceCheckout({ branch, dir, repo })
+  await forceCheckout({ branch, dir })
 
   update(dir)
 
@@ -232,19 +232,13 @@ const log = {
 async function forceCheckout({
   branch,
   dir,
-  repo,
 }: {
   branch: string
   dir: string
-  repo: Repo
 }) {
   try {
     exec(`git checkout ${branch}`, dir)
-
-    // if there isn't a current PR then reset to latest master
-    if (!(await pullRequestAlreadyExists({ branch, repo }))) {
-      exec(`git reset master --hard`, dir)
-    }
+    exec(`git reset master --hard`, dir)
   } catch (_) {
     exec(`git checkout -b ${branch}`, dir)
   }
