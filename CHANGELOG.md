@@ -1,3 +1,15 @@
+# v0.1.4 (Wed May 20 2020)
+
+#### ⚠️  Pushed to `master`
+
+- fix renovate config ([@ds300](https://github.com/ds300))
+
+#### Authors: 1
+
+- David Sheldrick ([@ds300](https://github.com/ds300))
+
+---
+
 # v0.1.3 (Wed May 20 2020)
 
 #### 🐛  Bug Fix
