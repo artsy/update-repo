@@ -1,3 +1,23 @@
+# v0.1.3 (Wed May 20 2020)
+
+#### 🐛  Bug Fix
+
+- Update yarn orb to v5 [#12](https://github.com/artsy/update-repo/pull/12) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Update dependency typescript to v3.9.3 [#13](https://github.com/artsy/update-repo/pull/13) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Reset to master before update if PR already exists [#14](https://github.com/artsy/update-repo/pull/14) ([@ds300](https://github.com/ds300))
+
+#### 🏠  Internal
+
+- Update dependency @types/node to v13.11.1 [#6](https://github.com/artsy/update-repo/pull/6) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+
+#### Authors: 3
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- David Sheldrick ([@ds300](https://github.com/ds300))
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.1.1 (Thu Apr 16 2020)
 
 #### 🐛  Bug Fix
