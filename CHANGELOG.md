@@ -1,3 +1,15 @@
+# v0.1.5 (Wed May 20 2020)
+
+#### 🐛  Bug Fix
+
+- Update auto orb to v1.3.2 [#11](https://github.com/artsy/update-repo/pull/11) ([@renovate-bot](https://github.com/renovate-bot))
+
+#### Authors: 1
+
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.1.4 (Wed May 20 2020)
 
 #### ⚠️  Pushed to `master`
