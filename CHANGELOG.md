@@ -1,3 +1,15 @@
+# v0.2.0 (Tue Sep 08 2020)
+
+#### 🚀  Enhancement
+
+- Fix broken links in README [#23](https://github.com/artsy/update-repo/pull/23) ([@starsirius](https://github.com/starsirius))
+
+#### Authors: 1
+
+- Chung-Yi Chi ([@starsirius](https://github.com/starsirius))
+
+---
+
 # v0.1.6 (Fri Aug 21 2020)
 
 #### ⚠️  Pushed to `master`
