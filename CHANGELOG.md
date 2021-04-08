@@ -1,3 +1,29 @@
+# v0.2.1 (Thu Apr 08 2021)
+
+#### 🐛  Bug Fix
+
+- Update dep prettier from 2.0.4 to v2.2.1 [#9](https://github.com/artsy/update-repo/pull/9) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+
+#### 🏠  Internal
+
+- Update dep typescript from 4.2.3 to v4.2.4 [#32](https://github.com/artsy/update-repo/pull/32) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep @types/node from 13.11.1 to v14 [#20](https://github.com/artsy/update-repo/pull/20) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Update dep typescript from 4.2.2 to v4.2.3 [#31](https://github.com/artsy/update-repo/pull/31) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.1.5 to v4.2.2 [#30](https://github.com/artsy/update-repo/pull/30) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.1.4 to v4.1.5 [#29](https://github.com/artsy/update-repo/pull/29) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.1.3 to v4.1.4 [#28](https://github.com/artsy/update-repo/pull/28) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.1.2 to v4.1.3 [#27](https://github.com/artsy/update-repo/pull/27) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.0.5 to v4.1.2 [#26](https://github.com/artsy/update-repo/pull/26) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.0.3 to v4.0.5 [#25](https://github.com/artsy/update-repo/pull/25) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.0.2 to v4.0.3 [#24](https://github.com/artsy/update-repo/pull/24) ([@renovate-bot](https://github.com/renovate-bot))
+
+#### Authors: 2
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.2.0 (Tue Sep 08 2020)
 
 #### 🚀  Enhancement
