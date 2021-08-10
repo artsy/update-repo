@@ -1,3 +1,26 @@
+# v0.3.0 (Tue Aug 10 2021)
+
+#### 🚀  Enhancement
+
+- add --no-verify to git commit [#39](https://github.com/artsy/update-repo/pull/39) ([@ovasdi](https://github.com/ovasdi))
+
+#### 🏠  Internal
+
+- Update yarn orb from 5.1.3 to v6 [#38](https://github.com/artsy/update-repo/pull/38) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Update auto orb from 1.3.2 to v1.4.0 [#37](https://github.com/artsy/update-repo/pull/37) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.3.4 to v4.3.5 [#36](https://github.com/artsy/update-repo/pull/36) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.3.3 to v4.3.4 [#35](https://github.com/artsy/update-repo/pull/35) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.3.2 to v4.3.3 [#34](https://github.com/artsy/update-repo/pull/34) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.2.4 to v4.3.2 [#33](https://github.com/artsy/update-repo/pull/33) ([@renovate-bot](https://github.com/renovate-bot))
+
+#### Authors: 3
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- Ozzie Vasdi ([@ovasdi](https://github.com/ovasdi))
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.2.1 (Thu Apr 08 2021)
 
 #### 🐛  Bug Fix
