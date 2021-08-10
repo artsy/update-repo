@@ -1,6 +1,6 @@
 # @artsy/update-repo
 
-Update github repos with a pull request
+Update github repos with a pull request.
 
 ## Installation
 
