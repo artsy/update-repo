@@ -1,3 +1,15 @@
+# v0.3.1 (Tue Aug 10 2021)
+
+#### 🐛  Bug Fix
+
+- Update README.md [#40](https://github.com/artsy/update-repo/pull/40) ([@ovasdi](https://github.com/ovasdi))
+
+#### Authors: 1
+
+- Ozzie Vasdi ([@ovasdi](https://github.com/ovasdi))
+
+---
+
 # v0.3.0 (Tue Aug 10 2021)
 
 #### 🚀  Enhancement
