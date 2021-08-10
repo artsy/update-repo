@@ -111,7 +111,7 @@ function push({
   commitMessage: string
 }) {
   exec(`git add -A`, dir)
-  const result = spawnSync("git", ["commit", "-m", commitMessage], { cwd: dir })
+  const result = spawnSync("git", ["commit", "-m", commitMessage, "--no-verify"], { cwd: dir })
   if (result.status !== 0) {
     throw new Error(`Failed comitting: ${result.output.toString()}`)
   }
