@@ -1,3 +1,15 @@
+# v0.4.0 (Tue Aug 10 2021)
+
+#### 🚀  Enhancement
+
+- Revert "Update README.md" [#41](https://github.com/artsy/update-repo/pull/41) ([@ovasdi](https://github.com/ovasdi))
+
+#### Authors: 1
+
+- Ozzie Vasdi ([@ovasdi](https://github.com/ovasdi))
+
+---
+
 # v0.3.1 (Tue Aug 10 2021)
 
 #### 🐛  Bug Fix
