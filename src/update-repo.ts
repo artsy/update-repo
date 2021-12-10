@@ -20,7 +20,7 @@ export async function updateRepo(_args: {
   update: (dir: string) => void
 }) {
   const args = {
-    targetBranch: "master",
+    targetBranch: "main",
     commitMessage: _args.title,
     assignees: [],
     labels: [],
@@ -176,7 +176,7 @@ async function createAndMergePullRequest({
   const res = await octokit.pulls.create({
     ...repo,
     head: branch,
-    base: "master",
+    base: "main",
     title: title,
     body,
   })
@@ -238,7 +238,7 @@ async function forceCheckout({
 }) {
   try {
     exec(`git checkout ${branch}`, dir)
-    exec(`git reset master --hard`, dir)
+    exec(`git reset main --hard`, dir)
   } catch (_) {
     exec(`git checkout -b ${branch}`, dir)
   }
