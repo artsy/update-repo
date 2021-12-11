@@ -42,6 +42,7 @@ export async function updateRepo(_args: {
 async function _updateRepo({
   repo,
   branch,
+  targetBranch,
   update,
   title,
   body,
@@ -63,7 +64,7 @@ async function _updateRepo({
 }) {
   log.step("Cloning repo")
   clone({ repo, dir })
-  await forceCheckout({ branch, dir })
+  await forceCheckout({ branch, targetBranch, dir })
 
   update(dir)
 
@@ -87,6 +88,7 @@ async function _updateRepo({
   await createAndMergePullRequest({
     repo,
     branch,
+    targetBranch,
     title,
     assignees,
     labels,
@@ -157,6 +159,7 @@ async function pullRequestAlreadyExists({
 async function createAndMergePullRequest({
   repo,
   branch,
+  targetBranch,
   title,
   assignees,
   labels,
@@ -164,6 +167,7 @@ async function createAndMergePullRequest({
 }: {
   repo: Repo
   branch: string
+  targetBranch: string,
   title: string
   assignees: string[]
   labels: string[]
@@ -176,7 +180,7 @@ async function createAndMergePullRequest({
   const res = await octokit.pulls.create({
     ...repo,
     head: branch,
-    base: "master",
+    base: targetBranch,
     title: title,
     body,
   })
@@ -231,14 +235,16 @@ const log = {
  */
 async function forceCheckout({
   branch,
+  targetBranch,
   dir,
 }: {
   branch: string
+  targetBranch: string,
   dir: string
 }) {
   try {
     exec(`git checkout ${branch}`, dir)
-    exec(`git reset master --hard`, dir)
+    exec(`git reset ${targetBranch} --hard`, dir)
   } catch (_) {
     exec(`git checkout -b ${branch}`, dir)
   }
