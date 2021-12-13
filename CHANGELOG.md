@@ -1,3 +1,35 @@
+# v0.5.0 (Mon Dec 13 2021)
+
+#### 🚀  Enhancement
+
+- feat: adopt inclusive language - main default branch [#53](https://github.com/artsy/update-repo/pull/53) ([@dblandin](https://github.com/dblandin))
+
+#### 🐛  Bug Fix
+
+- fix: use the targetBranch option to reset/pr [#52](https://github.com/artsy/update-repo/pull/52) ([@dblandin](https://github.com/dblandin))
+
+#### 🏠  Internal
+
+- Update dep typescript from 4.5.2 to v4.5.3 [#50](https://github.com/artsy/update-repo/pull/50) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.4.4 to v4.5.2 [#49](https://github.com/artsy/update-repo/pull/49) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.4.3 to v4.4.4 [#48](https://github.com/artsy/update-repo/pull/48) ([@renovate-bot](https://github.com/renovate-bot))
+- Bump node-fetch from 2.6.0 to 2.6.5 [#47](https://github.com/artsy/update-repo/pull/47) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Update auto orb from 1.4.0 to v2 [#45](https://github.com/artsy/update-repo/pull/45) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Update dep @artsy/auto-config from 1.0.2 to v1.1.0 [#44](https://github.com/artsy/update-repo/pull/44) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- chore: Update Renovate [#46](https://github.com/artsy/update-repo/pull/46) ([@icirellik](https://github.com/icirellik))
+- Update dep typescript from 4.4.2 to v4.4.3 [#43](https://github.com/artsy/update-repo/pull/43) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.3.5 to v4.4.2 [#42](https://github.com/artsy/update-repo/pull/42) ([@renovate-bot](https://github.com/renovate-bot))
+
+#### Authors: 5
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@renovate[bot]](https://github.com/renovate[bot])
+- Cameron Rollheiser ([@icirellik](https://github.com/icirellik))
+- Devon Blandin ([@dblandin](https://github.com/dblandin))
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.4.0 (Tue Aug 10 2021)
 
 #### 🚀  Enhancement
