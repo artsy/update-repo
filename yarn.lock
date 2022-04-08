@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@artsy/auto-config@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/auto-config/-/auto-config-1.1.1.tgz#bd062357c7f2eca612cf985c6f159e166549d37c"
-  integrity sha512-KNt8wqY/l/xoQvVdhFF7c6/B0uqhLwyMKZeTgHGSF1tJaju3LS+pJLReETrREXc8zmpRB7U+dWzmUzYiA3LtRw==
+"@artsy/auto-config@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/auto-config/-/auto-config-1.2.0.tgz#62a237ca3a058f1b91e5b8a12abebae0ddc5bd2f"
+  integrity sha512-6zGlvqELl4XhqMajJxfgHaY3m5YhZK5FwkxlouJKSb0Su301bzXaPUxKjzj9X147YHJUyrRLSAruzVtj1Gr42Q==
 
 "@octokit/auth-token@^2.4.0":
   version "2.4.0"
