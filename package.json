@@ -35,7 +35,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "@octokit/rest": "^17.2.0",
+    "@octokit/rest": "^18.0.0",
     "kleur": "^3.0.3",
     "tmp": "^0.1.0"
   }
