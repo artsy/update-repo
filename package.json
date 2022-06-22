@@ -1,6 +1,6 @@
 {
   "name": "@artsy/update-repo",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Update repositories easily from a node script",
   "main": "index.js",
   "repository": "https://github.com/artsy/update-repo",
