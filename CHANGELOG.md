@@ -1,3 +1,37 @@
+# v0.6.0 (Wed Jun 22 2022)
+
+#### 🚀  Enhancement
+
+- chore: trigger auto release [#69](https://github.com/artsy/update-repo/pull/69) ([@anandaroop](https://github.com/anandaroop))
+
+#### 🏠  Internal
+
+- chore(deps): update dep typescript from 4.7.3 to v4.7.4 [#68](https://github.com/artsy/update-repo/pull/68) ([@renovate[bot]](https://github.com/renovate[bot]))
+- chore(deps): update dep typescript from 4.7.2 to v4.7.3 [#67](https://github.com/artsy/update-repo/pull/67) ([@renovate-bot](https://github.com/renovate-bot))
+- chore(deps): update dep typescript from 4.6.4 to v4.7.2 [#66](https://github.com/artsy/update-repo/pull/66) ([@renovate-bot](https://github.com/renovate-bot))
+- chore(deps): update dep typescript from 4.6.3 to v4.6.4 [#65](https://github.com/artsy/update-repo/pull/65) ([@renovate-bot](https://github.com/renovate-bot))
+- chore(deps): update yarn orb from 6.1.0 to v6.2.0 [#64](https://github.com/artsy/update-repo/pull/64) ([@renovate-bot](https://github.com/renovate-bot))
+- chore(deps): update auto orb from 2.0.0 to v2.1.0 [#63](https://github.com/artsy/update-repo/pull/63) ([@renovate-bot](https://github.com/renovate-bot))
+- chore(deps): update dep @artsy/auto-config from 1.1.1 to v1.2.0 [#62](https://github.com/artsy/update-repo/pull/62) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- Bump node-fetch from 2.6.5 to 2.6.7 [#58](https://github.com/artsy/update-repo/pull/58) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): update dep @artsy/auto-config from 1.1.0 to v1.1.1 [#59](https://github.com/artsy/update-repo/pull/59) ([@renovate-bot](https://github.com/renovate-bot) [@renovate[bot]](https://github.com/renovate[bot]))
+- chore: update renovate assignee [#61](https://github.com/artsy/update-repo/pull/61) ([@ovasdi](https://github.com/ovasdi))
+- chore(deps): update dep typescript from 4.6.2 to v4.6.3 [#60](https://github.com/artsy/update-repo/pull/60) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.5.5 to v4.6.2 [#57](https://github.com/artsy/update-repo/pull/57) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.5.4 to v4.5.5 [#56](https://github.com/artsy/update-repo/pull/56) ([@renovate-bot](https://github.com/renovate-bot))
+- Update yarn orb from 6.0.0 to v6.1.0 [#55](https://github.com/artsy/update-repo/pull/55) ([@renovate-bot](https://github.com/renovate-bot))
+- Update dep typescript from 4.5.3 to v4.5.4 [#54](https://github.com/artsy/update-repo/pull/54) ([@renovate-bot](https://github.com/renovate-bot))
+
+#### Authors: 5
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@renovate[bot]](https://github.com/renovate[bot])
+- Anandaroop Roy ([@anandaroop](https://github.com/anandaroop))
+- Ozzie Vasdi ([@ovasdi](https://github.com/ovasdi))
+- WhiteSource Renovate ([@renovate-bot](https://github.com/renovate-bot))
+
+---
+
 # v0.5.0 (Mon Dec 13 2021)
 
 #### 🚀  Enhancement
