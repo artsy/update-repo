@@ -3,3 +3,4 @@ lib
 package
 artsy-update-repo-*.tgz
 *.log
+.git/
