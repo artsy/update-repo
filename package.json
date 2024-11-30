@@ -26,7 +26,7 @@
   "devDependencies": {
     "@artsy/auto-config": "1.2.0",
     "@types/node": "14.14.34",
-    "@types/tmp": "0.1.0",
+    "@types/tmp": "0.2.3",
     "prettier": "2.2.1",
     "typescript": "5.2.2"
   },
@@ -37,6 +37,6 @@
   "dependencies": {
     "@octokit/rest": "^17.2.0",
     "kleur": "^3.0.3",
-    "tmp": "^0.1.0"
+    "tmp": "^0.2.0"
   }
 }
