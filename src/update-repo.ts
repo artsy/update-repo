@@ -17,6 +17,7 @@ export async function updateRepo(_args: {
   commitMessage?: string
   assignees?: string[]
   labels?: string[]
+  automerge?: boolean
   update: (dir: string) => void
 }) {
   const args = {
@@ -24,6 +25,7 @@ export async function updateRepo(_args: {
     commitMessage: _args.title,
     assignees: [],
     labels: [],
+    automerge: false,
     ..._args,
   }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
@@ -49,6 +51,7 @@ async function _updateRepo({
   commitMessage,
   assignees,
   labels,
+  automerge,
   dir,
 }: {
   repo: Repo
@@ -59,6 +62,7 @@ async function _updateRepo({
   commitMessage: string
   assignees: string[]
   labels: string[]
+  automerge: boolean
   update: (dir: string) => void
   dir: string
 }) {
@@ -85,7 +89,7 @@ async function _updateRepo({
   }
 
   log.step("Creating and merging pull request")
-  await createAndMergePullRequest({
+  const prId = await createAndMergePullRequest({
     repo,
     branch,
     targetBranch,
@@ -94,6 +98,11 @@ async function _updateRepo({
     labels,
     body,
   })
+
+  if (automerge) {
+    log.step("Enabling auto-merge")
+    await enablePullRequestAutoMerge({ pullRequestId: prId })
+  }
 }
 
 function clone({ repo, dir }: { repo: Repo; dir: string }) {
@@ -200,6 +209,38 @@ async function createAndMergePullRequest({
       labels,
     })
   }
+  return res.data.node_id
+}
+
+async function enablePullRequestAutoMerge({
+  pullRequestId,
+}: {
+  pullRequestId: string
+}): Promise<void> {
+  const octokit = new Octokit({
+    auth: process.env.GH_TOKEN,
+  })
+
+  const mutation = `
+    mutation($pullRequestId: ID!) {
+      enablePullRequestAutoMerge(input: {
+        pullRequestId: $pullRequestId
+      }) {
+        pullRequest {
+          id
+          autoMergeRequest {
+            enabledAt
+          }
+        }
+      }
+    }
+  `
+
+  await octokit.graphql(mutation, {
+    pullRequestId: pullRequestId,
+  })
+
+  log.substep(`Auto-merge enabled!`)
 }
 
 /**
