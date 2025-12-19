@@ -221,6 +221,10 @@ async function enablePullRequestAutoMerge({
     auth: process.env.GH_TOKEN,
   })
 
+  // ensure at least one running check
+  // re-check if no checks running
+  // if re run a certain amount of times and still no checks, merge? come back to this later probably?
+
   const mutation = `
     mutation($pullRequestId: ID!) {
       enablePullRequestAutoMerge(input: {
@@ -242,6 +246,12 @@ async function enablePullRequestAutoMerge({
 
   log.substep(`Auto-merge enabled!`)
 }
+
+function pollPrChecks(pullRequestId: string) {
+ const octokit = new Octokit({
+  auth: process.env.GH_TOKEN
+ })
+} 
 
 /**
  * Puts prefix at the start of every line of text
