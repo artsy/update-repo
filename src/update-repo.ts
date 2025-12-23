@@ -16,6 +16,16 @@ import type {
   ForceCheckoutArgs
 } from "./types"
 
+
+function createOctokit() {
+  if (!process.env.GH_TOKEN) {
+    throw new Error("GH_TOKEN environment variable is required")
+  }
+  return new Octokit({ auth: process.env.GH_TOKEN })
+}
+
+const octokit = createOctokit()
+
 export async function updateRepo(_args: UpdateRepoArgs) {
   const args = {
     targetBranch: "master",
@@ -133,9 +143,6 @@ async function pullRequestAlreadyExists({
   branch,
   repo,
 }: PullRequestExistsArgs) {
-  const octokit = new Octokit({
-    auth: process.env.GH_TOKEN,
-  })
   const res = await octokit.pulls.list({
     ...repo,
     state: "open",
@@ -152,9 +159,6 @@ async function createAndMergePullRequest({
   labels,
   body,
 }: CreatePullRequestArgs) {
-  const octokit = new Octokit({
-    auth: process.env.GH_TOKEN,
-  })
   log.substep("Creating initial PR")
   const res = await octokit.pulls.create({
     ...repo,
@@ -189,11 +193,6 @@ async function enablePullRequestAutoMerge({
   autoMergeMethod,
   repo
 }: EnableAutoMergeArgs): Promise<void> {
-  const octokit = new Octokit({
-    auth: process.env.GH_TOKEN,
-  })
-
-
   let counter: number = 0
   let status: string | null = null
   while (status == null && counter < 10) {
