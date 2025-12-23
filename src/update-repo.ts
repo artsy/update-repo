@@ -3,26 +3,20 @@ import { spawnSync } from "child_process"
 import chalk from "kleur"
 import { Octokit } from "@octokit/rest"
 import { CHECK_PR_STATUS_QUERY, ENABLE_AUTO_MERGE_MUTATION } from "./graphql-queries"
+import type {
+  Repo,
+  AutomergeMethod,
+  UpdateRepoArgs,
+  UpdateRepoInternalArgs,
+  CloneArgs,
+  PushArgs,
+  PullRequestExistsArgs,
+  CreatePullRequestArgs,
+  EnableAutoMergeArgs,
+  ForceCheckoutArgs
+} from "./types"
 
-interface Repo {
-  owner: string
-  repo: string
-}
-
-type AutomergeMethod = "SQUASH" | "MERGE" | undefined
-
-export async function updateRepo(_args: {
-  repo: Repo
-  branch: string
-  targetBranch?: string
-  title: string
-  body: string
-  commitMessage?: string
-  assignees?: string[]
-  labels?: string[]
-  automergeMethod?: AutomergeMethod
-  update: (dir: string) => void
-}) {
+export async function updateRepo(_args: UpdateRepoArgs) {
   const args = {
     targetBranch: "master",
     commitMessage: _args.title,
@@ -55,20 +49,8 @@ async function _updateRepo({
   assignees,
   labels,
   automergeMethod,
-  dir,
-}: {
-  repo: Repo
-  branch: string
-  targetBranch: string
-  title: string
-  body: string
-  commitMessage: string
-  assignees: string[]
-  labels: string[]
-  automergeMethod: AutomergeMethod
-  update: (dir: string) => void
-  dir: string
-}) {
+  dir
+}: UpdateRepoInternalArgs) {
   log.step("Cloning repo")
   clone({ repo, dir })
   await forceCheckout({ branch, targetBranch, dir })
@@ -108,7 +90,7 @@ async function _updateRepo({
   }
 }
 
-function clone({ repo, dir }: { repo: Repo; dir: string }) {
+function clone({ repo, dir }: CloneArgs) {
   exec(
     `git clone https://${process.env.GH_TOKEN}@github.com/${repo.owner}/${repo.repo} ${dir}`,
     process.cwd(),
@@ -119,11 +101,7 @@ function push({
   dir,
   branch,
   commitMessage,
-}: {
-  dir: string
-  branch: string
-  commitMessage: string
-}) {
+}: PushArgs) {
   exec(`git add -A`, dir)
   const result = spawnSync("git", ["commit", "-m", commitMessage, "--no-verify"], { cwd: dir })
   if (result.status !== 0) {
@@ -154,10 +132,7 @@ class ShellError extends Error {
 async function pullRequestAlreadyExists({
   branch,
   repo,
-}: {
-  branch: string
-  repo: Repo
-}) {
+}: PullRequestExistsArgs) {
   const octokit = new Octokit({
     auth: process.env.GH_TOKEN,
   })
@@ -176,15 +151,7 @@ async function createAndMergePullRequest({
   assignees,
   labels,
   body,
-}: {
-  repo: Repo
-  branch: string
-  targetBranch: string,
-  title: string
-  assignees: string[]
-  labels: string[]
-  body: string
-}) {
+}: CreatePullRequestArgs) {
   const octokit = new Octokit({
     auth: process.env.GH_TOKEN,
   })
@@ -221,11 +188,7 @@ async function enablePullRequestAutoMerge({
   pullRequestId,
   autoMergeMethod,
   repo
-}: {
-  pullRequestId: string
-  repo: Repo
-  autoMergeMethod: AutomergeMethod
-}): Promise<void> {
+}: EnableAutoMergeArgs): Promise<void> {
   const octokit = new Octokit({
     auth: process.env.GH_TOKEN,
   })
@@ -289,11 +252,7 @@ async function forceCheckout({
   branch,
   targetBranch,
   dir,
-}: {
-  branch: string
-  targetBranch: string,
-  dir: string
-}) {
+}: ForceCheckoutArgs) {
   try {
     exec(`git checkout ${branch}`, dir)
     exec(`git reset ${targetBranch} --hard`, dir)
