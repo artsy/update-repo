@@ -2,6 +2,7 @@ import tmp from "tmp"
 import { spawnSync } from "child_process"
 import chalk from "kleur"
 import { Octokit } from "@octokit/rest"
+import { CHECK_PR_STATUS_QUERY, ENABLE_AUTO_MERGE_MUTATION } from "./graphql-queries"
 
 interface Repo {
   owner: string
@@ -232,18 +233,8 @@ async function enablePullRequestAutoMerge({
 
   let counter: number = 0
   let status: string | null = null
-  const query = `
-      query($pullRequestId: ID!, $repo: String!, $owner: String!) {
-        repository(owner: $owner, name: $repo) {
-          pullRequest(number: $pullRequestId) {
-            statusCheckRollup {
-              state
-            }
-          }
-        }
-    }`
   while (status == null && counter < 10) {
-    const response = await octokit.graphql(query, {
+    const response = await octokit.graphql(CHECK_PR_STATUS_QUERY, {
       pullRequestId: pullRequestId,
       owner: repo.owner,
       repo: repo.repo
@@ -255,23 +246,7 @@ async function enablePullRequestAutoMerge({
     counter++
   }
 
-
-  const mutation = `
-    mutation($pullRequestId: ID!, $autoMergeMethod: PullRequestAutoMergeMethod!) {
-      enablePullRequestAutoMerge(input: {
-        pullRequestId: $pullRequestId
-        autoMergeMethod: $autoMergeMethod
-      }) {
-        pullRequest {
-          id
-          autoMergeRequest {
-            enabledAt
-          }
-        }
-      }
-    }
-  `
-  await octokit.graphql(mutation, {
+  await octokit.graphql(ENABLE_AUTO_MERGE_MUTATION, {
     pullRequestId: pullRequestId,
     autoMergeMethod: autoMergeMethod
   })
