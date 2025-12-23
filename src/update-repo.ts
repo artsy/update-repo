@@ -8,6 +8,8 @@ interface Repo {
   repo: string
 }
 
+type AutomergeMethod = "SQUASH" | "MERGE" | undefined
+
 export async function updateRepo(_args: {
   repo: Repo
   branch: string
@@ -17,7 +19,7 @@ export async function updateRepo(_args: {
   commitMessage?: string
   assignees?: string[]
   labels?: string[]
-  automerge?: boolean
+  automergeMethod?: AutomergeMethod
   update: (dir: string) => void
 }) {
   const args = {
@@ -25,7 +27,7 @@ export async function updateRepo(_args: {
     commitMessage: _args.title,
     assignees: [],
     labels: [],
-    automerge: false,
+    automergeMethod: _args.automergeMethod ?? undefined,
     ..._args,
   }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
@@ -51,7 +53,7 @@ async function _updateRepo({
   commitMessage,
   assignees,
   labels,
-  automerge,
+  automergeMethod,
   dir,
 }: {
   repo: Repo
@@ -62,7 +64,7 @@ async function _updateRepo({
   commitMessage: string
   assignees: string[]
   labels: string[]
-  automerge: boolean
+  automergeMethod: AutomergeMethod
   update: (dir: string) => void
   dir: string
 }) {
@@ -89,7 +91,7 @@ async function _updateRepo({
   }
 
   log.step("Creating and merging pull request")
-  const prId = await createAndMergePullRequest({
+  const { prId } = await createAndMergePullRequest({
     repo,
     branch,
     targetBranch,
@@ -99,9 +101,9 @@ async function _updateRepo({
     body,
   })
 
-  if (automerge) {
+  if (automergeMethod) {
     log.step("Enabling auto-merge")
-    await enablePullRequestAutoMerge({ pullRequestId: prId })
+    await enablePullRequestAutoMerge({ pullRequestId: prId, repo: repo, autoMergeMethod: automergeMethod })
   }
 }
 
@@ -209,26 +211,56 @@ async function createAndMergePullRequest({
       labels,
     })
   }
-  return res.data.node_id
+  return {
+    prId: res.data.node_id,
+  }
 }
 
 async function enablePullRequestAutoMerge({
   pullRequestId,
+  autoMergeMethod,
+  repo
 }: {
   pullRequestId: string
+  repo: Repo
+  autoMergeMethod: AutomergeMethod
 }): Promise<void> {
   const octokit = new Octokit({
     auth: process.env.GH_TOKEN,
   })
 
-  // ensure at least one running check
-  // re-check if no checks running
-  // if re run a certain amount of times and still no checks, merge? come back to this later probably?
+
+  let counter: number = 0
+  let status: string | null = null
+  const query = `
+      query($pullRequestId: ID!, $repo: String!, $owner: String!) {
+        repository(owner: $owner, name: $repo) {
+          pullRequest(number: $pullRequestId) {
+            statusCheckRollup {
+              state
+            }
+          }
+        }
+    }`
+  while (status == null && counter < 10) {
+    const response = await octokit.graphql(query, {
+      pullRequestId: pullRequestId,
+      owner: repo.owner,
+      repo: repo.repo
+    })
+
+    status = response?.data?.repository?.pullRequest?.statusCheckRollup?.state ?? null
+    await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for 1 second
+    log.substep(`Poll attempt ${counter}: status is ${status}`)
+    counter++
+  }
+
 
   const mutation = `
-    mutation($pullRequestId: ID!) {
+    mutation($pullRequestId: ID!, $autoMergeMethod: PullRequestAutoMergeMethod!) {
       enablePullRequestAutoMerge(input: {
         pullRequestId: $pullRequestId
+        autoMergeMethod: $autoMergeMethod
       }) {
         pullRequest {
           id
@@ -239,19 +271,13 @@ async function enablePullRequestAutoMerge({
       }
     }
   `
-
   await octokit.graphql(mutation, {
     pullRequestId: pullRequestId,
+    autoMergeMethod: autoMergeMethod
   })
 
   log.substep(`Auto-merge enabled!`)
 }
-
-function pollPrChecks(pullRequestId: string) {
- const octokit = new Octokit({
-  auth: process.env.GH_TOKEN
- })
-} 
 
 /**
  * Puts prefix at the start of every line of text
