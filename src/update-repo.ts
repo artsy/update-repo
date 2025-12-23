@@ -4,8 +4,6 @@ import chalk from "kleur"
 import { Octokit } from "@octokit/rest"
 import { CHECK_PR_STATUS_QUERY, ENABLE_AUTO_MERGE_MUTATION } from "./graphql-queries"
 import type {
-  Repo,
-  AutomergeMethod,
   UpdateRepoArgs,
   UpdateRepoInternalArgs,
   CloneArgs,
@@ -24,6 +22,9 @@ function createOctokit() {
   return new Octokit({ auth: process.env.GH_TOKEN })
 }
 
+/**
+ * Create a single Octokit instance to be reused across function calls
+ */
 const octokit = createOctokit()
 
 export async function updateRepo(_args: UpdateRepoArgs) {
@@ -193,6 +194,12 @@ async function enablePullRequestAutoMerge({
   autoMergeMethod,
   repo
 }: EnableAutoMergeArgs): Promise<void> {
+
+  // Poll for status to be available.
+  // This is necessary because GitHub sometimes takes a moment to
+  // calculate the status checks after creating the PR and enabling
+  // auto-merge before that will fail. Will retry up to 10 times with
+  // a 1 second delay between attempts.
   let counter: number = 0
   let status: string | null = null
   while (status == null && counter < 10) {
