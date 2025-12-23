@@ -5,6 +5,8 @@ export interface Repo {
 
 export type AutomergeMethod = "SQUASH" | "MERGE" | undefined
 
+export type CheckStateStatus = "SUCCESS" | "PENDING" | "FAILURE" | "ERROR" | "EXPECTED" | null
+
 export interface UpdateRepoArgs {
   repo: Repo
   branch: string

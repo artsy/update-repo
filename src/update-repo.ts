@@ -11,7 +11,8 @@ import type {
   PullRequestExistsArgs,
   CreatePullRequestArgs,
   EnableAutoMergeArgs,
-  ForceCheckoutArgs
+  ForceCheckoutArgs,
+  CheckStateStatus
 } from "./types"
 
 
@@ -201,7 +202,7 @@ async function enablePullRequestAutoMerge({
   // auto-merge before that will fail. Will retry up to 10 times with
   // a 1 second delay between attempts.
   let counter: number = 0
-  let status: string | null = null
+  let status: CheckStateStatus = null
   while (status == null && counter < 10) {
     const response = await octokit.graphql(CHECK_PR_STATUS_QUERY, {
       pullRequestId: pullRequestId,
