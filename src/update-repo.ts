@@ -86,7 +86,7 @@ async function _updateRepo({
   }
 
   log.step("Creating and merging pull request")
-  const { prId } = await createAndMergePullRequest({
+  const { prId, prNumber } = await createAndMergePullRequest({
     repo,
     branch,
     targetBranch,
@@ -98,7 +98,7 @@ async function _updateRepo({
 
   if (automergeMethod) {
     log.step("Enabling auto-merge")
-    await enablePullRequestAutoMerge({ pullRequestId: prId, repo: repo, autoMergeMethod: automergeMethod })
+    await enablePullRequestAutoMerge({ pullRequestId: prId, pullRequestNumber: prNumber, repo: repo, autoMergeMethod: automergeMethod })
   }
 }
 
@@ -187,11 +187,13 @@ async function createAndMergePullRequest({
   }
   return {
     prId: res.data.node_id,
+    prNumber: res.data.number,
   }
 }
 
 async function enablePullRequestAutoMerge({
   pullRequestId,
+  pullRequestNumber,
   autoMergeMethod,
   repo
 }: EnableAutoMergeArgs): Promise<void> {
@@ -205,23 +207,22 @@ async function enablePullRequestAutoMerge({
   let status: CheckStateStatus = null
   while (status == null && counter < 10) {
     const response = await octokit.graphql(CHECK_PR_STATUS_QUERY, {
-      pullRequestId: pullRequestId,
+      pullRequestNumber: pullRequestNumber,
       owner: repo.owner,
       repo: repo.repo
     })
-
-    status = response?.data?.repository?.pullRequest?.statusCheckRollup?.state ?? null
+    status = response?.repository?.pullRequest?.statusCheckRollup?.state ?? null
     await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for 1 second
-    log.substep(`Poll attempt ${counter}: status is ${status}`)
     counter++
+    log.substep(`Poll attempt ${counter}: status is ${status}`)
   }
 
   await octokit.graphql(ENABLE_AUTO_MERGE_MUTATION, {
     pullRequestId: pullRequestId,
-    autoMergeMethod: autoMergeMethod
+    mergeMethod: autoMergeMethod
   })
 
-  log.substep(`Auto-merge enabled!`)
+  log.substep(`Auto-merge enabled with method ${autoMergeMethod}`)
 }
 
 /**

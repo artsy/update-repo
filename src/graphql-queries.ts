@@ -1,7 +1,7 @@
 export const CHECK_PR_STATUS_QUERY = `
-  query($pullRequestId: ID!, $repo: String!, $owner: String!) {
+  query getPullRequestStatus($pullRequestNumber: Int!, $repo: String!, $owner: String!) {
     repository(owner: $owner, name: $repo) {
-      pullRequest(number: $pullRequestId) {
+      pullRequest(number: $pullRequestNumber) {
         statusCheckRollup {
           state
         }
@@ -11,10 +11,10 @@ export const CHECK_PR_STATUS_QUERY = `
 `
 
 export const ENABLE_AUTO_MERGE_MUTATION = `
-  mutation($pullRequestId: ID!, $autoMergeMethod: PullRequestAutoMergeMethod!) {
+  mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
     enablePullRequestAutoMerge(input: {
       pullRequestId: $pullRequestId
-      autoMergeMethod: $autoMergeMethod
+      mergeMethod: $mergeMethod
     }) {
       pullRequest {
         id

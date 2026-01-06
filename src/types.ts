@@ -62,6 +62,7 @@ export interface CreatePullRequestArgs {
 
 export interface EnableAutoMergeArgs {
   pullRequestId: string
+  pullRequestNumber: number
   repo: Repo
   autoMergeMethod: AutomergeMethod
 }
