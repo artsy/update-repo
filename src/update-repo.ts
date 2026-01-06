@@ -202,7 +202,7 @@ async function enablePullRequestAutoMerge({
   // This is necessary because GitHub sometimes takes a moment to
   // calculate the status checks after creating the PR and enabling
   // auto-merge before that will fail. Will retry up to 10 times with
-  // a 1 second delay between attempts.
+  // a 500ms delay between attempts, i.e. retry for 5 seconds.
   let counter: number = 0
   let status: CheckStateStatus = null
   while (status == null && counter < 10) {
@@ -212,7 +212,7 @@ async function enablePullRequestAutoMerge({
       repo: repo.repo
     })
     status = response?.repository?.pullRequest?.statusCheckRollup?.state ?? null
-    await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for 1 second
+    await new Promise((resolve) => setTimeout(resolve, 500)) // wait for 500ms
     counter++
     log.substep(`Poll attempt ${counter}: status is ${status}`)
   }
