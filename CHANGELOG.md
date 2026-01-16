@@ -1,3 +1,26 @@
+# v0.8.0 (Fri Jan 16 2026)
+
+### Release Notes
+
+#### chore: update docs with automergeMethod ([#89](https://github.com/artsy/update-repo/pull/89))
+
+- Adds support for GitHub's native auto merge feature
+- Updates docs
+
+Note: `autoMergeMethod` was originally mistakenly released in version `0.7.1` which has since been deprecated.
+
+---
+
+#### 🚀  Enhancement
+
+- chore: update docs with automergeMethod [#89](https://github.com/artsy/update-repo/pull/89) ([@mc-jones](https://github.com/mc-jones))
+
+#### Authors: 1
+
+- Matt Jones ([@mc-jones](https://github.com/mc-jones))
+
+---
+
 # v0.7.1 (Fri Jan 16 2026)
 
 #### 🐛  Bug Fix
