@@ -1,3 +1,21 @@
+# v0.7.1 (Fri Jan 16 2026)
+
+#### 🐛  Bug Fix
+
+- feat: allow PRs to be made with automerge enabled [#88](https://github.com/artsy/update-repo/pull/88) ([@amonkhouse](https://github.com/amonkhouse) [@mc-jones](https://github.com/mc-jones))
+
+#### 🏠  Internal
+
+- chore(deps): update dep auto from 2.2.0 to v2.3.0 [#84](https://github.com/artsy/update-repo/pull/84) ([@renovate[bot]](https://github.com/renovate[bot]))
+
+#### Authors: 3
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+- Amy Monkhouse ([@amonkhouse](https://github.com/amonkhouse))
+- Matt Jones ([@mc-jones](https://github.com/mc-jones))
+
+---
+
 # v0.7.0 (Wed Nov 19 2025)
 
 #### 🚀  Enhancement
