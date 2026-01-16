@@ -2,28 +2,39 @@ import tmp from "tmp"
 import { spawnSync } from "child_process"
 import chalk from "kleur"
 import { Octokit } from "@octokit/rest"
+import { CHECK_PR_STATUS_QUERY, ENABLE_AUTO_MERGE_MUTATION } from "./graphql-queries"
+import type {
+  UpdateRepoArgs,
+  UpdateRepoInternalArgs,
+  CloneArgs,
+  PushArgs,
+  PullRequestExistsArgs,
+  CreatePullRequestArgs,
+  EnableAutoMergeArgs,
+  ForceCheckoutArgs,
+  CheckStateStatus
+} from "./types"
 
-interface Repo {
-  owner: string
-  repo: string
+
+function createOctokit() {
+  if (!process.env.GH_TOKEN) {
+    throw new Error("GH_TOKEN environment variable is required")
+  }
+  return new Octokit({ auth: process.env.GH_TOKEN })
 }
 
-export async function updateRepo(_args: {
-  repo: Repo
-  branch: string
-  targetBranch?: string
-  title: string
-  body: string
-  commitMessage?: string
-  assignees?: string[]
-  labels?: string[]
-  update: (dir: string) => void
-}) {
+/**
+ * Create a single Octokit instance to be reused across function calls
+ */
+const octokit = createOctokit()
+
+export async function updateRepo(_args: UpdateRepoArgs) {
   const args = {
     targetBranch: "master",
     commitMessage: _args.title,
     assignees: [],
     labels: [],
+    automergeMethod: _args.automergeMethod ?? undefined,
     ..._args,
   }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
@@ -49,19 +60,9 @@ async function _updateRepo({
   commitMessage,
   assignees,
   labels,
-  dir,
-}: {
-  repo: Repo
-  branch: string
-  targetBranch: string
-  title: string
-  body: string
-  commitMessage: string
-  assignees: string[]
-  labels: string[]
-  update: (dir: string) => void
-  dir: string
-}) {
+  automergeMethod,
+  dir
+}: UpdateRepoInternalArgs) {
   log.step("Cloning repo")
   clone({ repo, dir })
   await forceCheckout({ branch, targetBranch, dir })
@@ -85,7 +86,7 @@ async function _updateRepo({
   }
 
   log.step("Creating and merging pull request")
-  await createAndMergePullRequest({
+  const { prId, prNumber } = await createAndMergePullRequest({
     repo,
     branch,
     targetBranch,
@@ -94,9 +95,14 @@ async function _updateRepo({
     labels,
     body,
   })
+
+  if (automergeMethod) {
+    log.step("Enabling auto-merge")
+    await enablePullRequestAutoMerge({ pullRequestId: prId, pullRequestNumber: prNumber, repo: repo, autoMergeMethod: automergeMethod })
+  }
 }
 
-function clone({ repo, dir }: { repo: Repo; dir: string }) {
+function clone({ repo, dir }: CloneArgs) {
   exec(
     `git clone https://${process.env.GH_TOKEN}@github.com/${repo.owner}/${repo.repo} ${dir}`,
     process.cwd(),
@@ -107,11 +113,7 @@ function push({
   dir,
   branch,
   commitMessage,
-}: {
-  dir: string
-  branch: string
-  commitMessage: string
-}) {
+}: PushArgs) {
   exec(`git add -A`, dir)
   const result = spawnSync("git", ["commit", "-m", commitMessage, "--no-verify"], { cwd: dir })
   if (result.status !== 0) {
@@ -142,13 +144,7 @@ class ShellError extends Error {
 async function pullRequestAlreadyExists({
   branch,
   repo,
-}: {
-  branch: string
-  repo: Repo
-}) {
-  const octokit = new Octokit({
-    auth: process.env.GH_TOKEN,
-  })
+}: PullRequestExistsArgs) {
   const res = await octokit.pulls.list({
     ...repo,
     state: "open",
@@ -164,18 +160,7 @@ async function createAndMergePullRequest({
   assignees,
   labels,
   body,
-}: {
-  repo: Repo
-  branch: string
-  targetBranch: string,
-  title: string
-  assignees: string[]
-  labels: string[]
-  body: string
-}) {
-  const octokit = new Octokit({
-    auth: process.env.GH_TOKEN,
-  })
+}: CreatePullRequestArgs) {
   log.substep("Creating initial PR")
   const res = await octokit.pulls.create({
     ...repo,
@@ -200,6 +185,44 @@ async function createAndMergePullRequest({
       labels,
     })
   }
+  return {
+    prId: res.data.node_id,
+    prNumber: res.data.number,
+  }
+}
+
+async function enablePullRequestAutoMerge({
+  pullRequestId,
+  pullRequestNumber,
+  autoMergeMethod,
+  repo
+}: EnableAutoMergeArgs): Promise<void> {
+
+  // Poll for status to be available.
+  // This is necessary because GitHub sometimes takes a moment to
+  // calculate the status checks after creating the PR and enabling
+  // auto-merge before that will fail. Will retry up to 10 times with
+  // a 500ms delay between attempts, i.e. retry for 5 seconds.
+  let counter: number = 0
+  let status: CheckStateStatus = null
+  while (status == null && counter < 10) {
+    const response = await octokit.graphql(CHECK_PR_STATUS_QUERY, {
+      pullRequestNumber: pullRequestNumber,
+      owner: repo.owner,
+      repo: repo.repo
+    })
+    status = response?.repository?.pullRequest?.statusCheckRollup?.state ?? null
+    await new Promise((resolve) => setTimeout(resolve, 500)) // wait for 500ms
+    counter++
+    log.substep(`Poll attempt ${counter}: status is ${status}`)
+  }
+
+  await octokit.graphql(ENABLE_AUTO_MERGE_MUTATION, {
+    pullRequestId: pullRequestId,
+    mergeMethod: autoMergeMethod
+  })
+
+  log.substep(`Auto-merge enabled with method ${autoMergeMethod}`)
 }
 
 /**
@@ -237,11 +260,7 @@ async function forceCheckout({
   branch,
   targetBranch,
   dir,
-}: {
-  branch: string
-  targetBranch: string,
-  dir: string
-}) {
+}: ForceCheckoutArgs) {
   try {
     exec(`git checkout ${branch}`, dir)
     exec(`git reset ${targetBranch} --hard`, dir)
