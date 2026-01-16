@@ -3,7 +3,7 @@ export interface Repo {
   repo: string
 }
 
-export type AutomergeMethod = "SQUASH" | "MERGE" | undefined
+export type AutoMergeMethod = "SQUASH" | "MERGE" | undefined
 
 export type CheckStateStatus = "SUCCESS" | "PENDING" | "FAILURE" | "ERROR" | "EXPECTED" | null
 
@@ -16,7 +16,7 @@ export interface UpdateRepoArgs {
   commitMessage?: string
   assignees?: string[]
   labels?: string[]
-  automergeMethod?: AutomergeMethod
+  autoMergeMethod?: AutoMergeMethod
   update: (dir: string) => void
 }
 
@@ -29,7 +29,7 @@ export interface UpdateRepoInternalArgs {
   commitMessage: string
   assignees: string[]
   labels: string[]
-  automergeMethod: AutomergeMethod
+  autoMergeMethod: AutoMergeMethod
   update: (dir: string) => void
   dir: string
 }
@@ -64,7 +64,7 @@ export interface EnableAutoMergeArgs {
   pullRequestId: string
   pullRequestNumber: number
   repo: Repo
-  autoMergeMethod: AutomergeMethod
+  autoMergeMethod: AutoMergeMethod
 }
 
 export interface ForceCheckoutArgs {

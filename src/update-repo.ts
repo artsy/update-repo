@@ -34,7 +34,7 @@ export async function updateRepo(_args: UpdateRepoArgs) {
     commitMessage: _args.title,
     assignees: [],
     labels: [],
-    automergeMethod: _args.automergeMethod ?? undefined,
+    autoMergeMethod: _args.autoMergeMethod ?? undefined,
     ..._args,
   }
   log.task(`Updating ${args.repo.owner}/${args.repo.repo}`)
@@ -60,7 +60,7 @@ async function _updateRepo({
   commitMessage,
   assignees,
   labels,
-  automergeMethod,
+  autoMergeMethod,
   dir
 }: UpdateRepoInternalArgs) {
   log.step("Cloning repo")
@@ -96,9 +96,9 @@ async function _updateRepo({
     body,
   })
 
-  if (automergeMethod) {
+  if (autoMergeMethod) {
     log.step("Enabling auto-merge")
-    await enablePullRequestAutoMerge({ pullRequestId: prId, pullRequestNumber: prNumber, repo: repo, autoMergeMethod: automergeMethod })
+    await enablePullRequestAutoMerge({ pullRequestId: prId, pullRequestNumber: prNumber, repo: repo, autoMergeMethod: autoMergeMethod })
   }
 }
 

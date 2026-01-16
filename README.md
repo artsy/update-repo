@@ -25,6 +25,7 @@ await updateRepo({
   commitMessage: "update version",
   assignees: ["ds300"],
   labels: ["automated"],
+  autoMergeMethod: "SQUASH",
   update: (dir) => {
     // This update function gets executed in a freshly-checked-out version
     // of the repo you specified. If you make any changes here they will
