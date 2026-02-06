@@ -1,3 +1,15 @@
+# v0.8.1 (Fri Feb 06 2026)
+
+#### 🐛  Bug Fix
+
+- feat: add triggers to conventional commits check [#90](https://github.com/artsy/update-repo/pull/90) ([@amonkhouse](https://github.com/amonkhouse))
+
+#### Authors: 1
+
+- Amy Monkhouse ([@amonkhouse](https://github.com/amonkhouse))
+
+---
+
 # v0.8.0 (Fri Jan 16 2026)
 
 ### Release Notes
