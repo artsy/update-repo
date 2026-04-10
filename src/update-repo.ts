@@ -103,10 +103,9 @@ async function _updateRepo({
 }
 
 function clone({ repo, dir }: CloneArgs) {
-  exec(
-    `git clone https://${process.env.GH_TOKEN}@github.com/${repo.owner}/${repo.repo} ${dir}`,
-    process.cwd(),
-  )
+  const token = process.env.GH_TOKEN!
+  const url = `https://x-access-token:${token}@github.com/${repo.owner}/${repo.repo}`
+  exec(`git clone ${url} ${dir}`, process.cwd())
 }
 
 function push({
