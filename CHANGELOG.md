@@ -1,3 +1,15 @@
+# v0.8.2 (Fri Apr 10 2026)
+
+#### 🐛  Bug Fix
+
+- fix: use x-access-token for HTTPS git clone [#91](https://github.com/artsy/update-repo/pull/91) ([@dblandin](https://github.com/dblandin))
+
+#### Authors: 1
+
+- devon blandin ([@dblandin](https://github.com/dblandin))
+
+---
+
 # v0.8.1 (Fri Feb 06 2026)
 
 #### 🐛  Bug Fix
