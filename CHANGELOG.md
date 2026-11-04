@@ -1,3 +1,19 @@
+# v0.8.3 (Wed Nov 04 2026)
+
+#### 🐛  Bug Fix
+
+- chore(deps): update dep auto from 2.3.0 to v3 [#95](https://github.com/artsy/update-repo/pull/95) ([@renovate[bot]](https://github.com/renovate[bot]))
+
+#### 🏠  Internal
+
+- chore(deps): update dep @artsy/auto-config from 1.2.0 to v1.3.0 [#92](https://github.com/artsy/update-repo/pull/92) ([@renovate[bot]](https://github.com/renovate[bot]))
+
+#### Authors: 1
+
+- [@renovate[bot]](https://github.com/renovate[bot])
+
+---
+
 # v0.8.2 (Fri Apr 10 2026)
 
 #### 🐛  Bug Fix
